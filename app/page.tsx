@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 
 const services = [
@@ -54,10 +55,29 @@ const plans = [
 ];
 
 export default function Home() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const handleMenuToggle = () => {
+    setIsMenuOpen((prev) => !prev);
+  };
+
+  const handleMenuClose = () => {
+    setIsMenuOpen(false);
+  };
+
   return (
     <div className="page">
       <header className="site-header">
         <div className="container header-inner">
+          <button
+            className="menu-toggle"
+            type="button"
+            aria-label={isMenuOpen ? 'メニューを閉じる' : 'メニューを開く'}
+            aria-expanded={isMenuOpen}
+            onClick={handleMenuToggle}
+          >
+            ≡
+          </button>
           <a className="logo" href="#home">
             JEONG LAB
           </a>
@@ -74,6 +94,33 @@ export default function Home() {
           </a>
         </div>
       </header>
+
+      <div className={`mobile-menu ${isMenuOpen ? 'open' : ''}`}>
+        <div className="mobile-menu-scrim" onClick={handleMenuClose} />
+        <nav className="mobile-menu-panel" aria-label="モバイルメニュー">
+          <a href="#home" onClick={handleMenuClose}>
+            ホーム
+          </a>
+          <a href="#about" onClick={handleMenuClose}>
+            私について
+          </a>
+          <a href="#services" onClick={handleMenuClose}>
+            サービス
+          </a>
+          <a href="#works" onClick={handleMenuClose}>
+            実績
+          </a>
+          <a href="#pricing" onClick={handleMenuClose}>
+            料金
+          </a>
+          <a href="#contact" onClick={handleMenuClose}>
+            お問い合わせ
+          </a>
+          <a className="btn btn-ghost" href="#contact" onClick={handleMenuClose}>
+            ご相談はこちら
+          </a>
+        </nav>
+      </div>
 
       <main>
         <section id="home" className="hero">
